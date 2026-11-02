@@ -1,7 +1,7 @@
 # 📊 LBSUhack 2026
 
 ## 👥 Our Team
-* **Backend / DevOps:** @pvlk-ks
+* **Backend / DevOps:** [@pvlk-ks](https://github.com/pvlk-ks)
 * **Frontend Developer:** 
 
 ## 🏗️ Repository Structure
