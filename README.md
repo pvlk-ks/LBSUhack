@@ -2,7 +2,7 @@
 
 ## 👥 Our Team
 * **Backend / DevOps:** [@pvlk-ks](https://github.com/pvlk-ks)
-* **Frontend Developer:** 
+* **Frontend Developer:** [@supercibersport](https://github.com/supercibersport)
 
 ## 🏗️ Repository Structure
 * `/backend` — Server-side application, API endpoints, and economic core logic. 
