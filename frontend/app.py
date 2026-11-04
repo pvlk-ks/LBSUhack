@@ -9,9 +9,13 @@ st.set_page_config(page_title="LBSUhack Analytics", layout="wide")
 st.title("📊 Экономическая Панель Управления (Прототип)")
 
 st.sidebar.header("Экономические показатели")
-inv = st.sidebar.number_input("Стартовые инвестиции ($):", value=10000.0, step=1000.0)
-rev = st.sidebar.number_input("Ежемесячная выручка ($):", value=3000.0, step=500.0)
-exp = st.sidebar.number_input("Ежемесячные расходы ($):", value=1800.0, step=200.0)
+
+# Заменили number_input на slider
+# Параметры: ("Текст", минимальное значение, максимальное значение, значение по умолчанию, шаг)
+inv = st.sidebar.slider("Стартовые инвестиции ($):", min_value=1000.0, max_value=50000.0, value=10000.0, step=1000.0)
+rev = st.sidebar.slider("Ежемесячная выручка ($):", min_value=500.0, max_value=20000.0, value=3000.0, step=500.0)
+exp = st.sidebar.slider("Ежемесячные расходы ($):", min_value=100.0, max_value=10000.0, value=1800.0, step=100.0)
+
 
 if st.sidebar.button("Запустить финансовую модель"):
     # введенныe данныe от пользователяв формате json
