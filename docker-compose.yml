@@ -8,3 +8,11 @@ services:
   volumes: 
    - ./backend:/app
   restart: always
+
+ frontend:
+  build: ./frontend
+  ports:
+   - 8501:8501
+  volumes:
+   - ./frontend:/app
+  restart: always

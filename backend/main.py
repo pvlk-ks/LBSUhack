@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 app = FastAPI(title="LBSUhack Core API")
 
+# принимаю данные и сверяю их тип
 class BusinessModel(BaseModel):
     investments: float
     monthly_revenue: float
@@ -12,7 +13,7 @@ class BusinessModel(BaseModel):
 def check_status():
     return {"status": "Beckend is running"}
 
-@app.post("/app/v1/calculate")
+@app.post("/api/v1/calculate")
 def calculate(data: BusinessModel):
     
     monthly_profit = data.monthly_revenue - data.monthly_expenses
@@ -27,6 +28,7 @@ def calculate(data: BusinessModel):
             "Net_Profit": round(current_balance, 2)
         })
         
+    #ответ от сервера
     return{
         "status": "success",
         "result": timeline
