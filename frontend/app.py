@@ -38,7 +38,7 @@ if choice_cfg:
         "choice_stage": choice_stage
     }
     
-    BACKEND_URL = "http://backend:8000/api/get-tasks"
+    BACKEND_URL = "http://nginx/api/get-task"
     
     try:
         with st.spinner('Считаем модель и строим прогнозы...'):

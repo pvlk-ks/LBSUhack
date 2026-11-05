@@ -1,28 +1,51 @@
 version: '3.8'
 
 services:
- backend:
-  build: ./backend
-  ports:
-   - 8000:8000
-  volumes: 
-   - ./backend:/app
-  restart: always
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: olympiads_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d olympiads_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
- frontend:
-  build: ./frontend
-  ports:
-   - 8501:8501
-  volumes:
-   - ./frontend:/app
-  restart: always
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/code
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/olympiads_db
+      - OLLAMA_URL=http://docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
 
   nginx:
-   image: nginx:alpine
-   ports:
-     - "80:80"
-   volumes:
-     - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-   depends_on:
-     - backend
-     - frontend
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  pgdata:
