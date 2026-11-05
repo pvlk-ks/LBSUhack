@@ -2,12 +2,34 @@ import streamlit as st
 import pandas as pd
 import requests
 
-st.set_page_config(page_title="LBSUhack Analytics", layout="wide")
+st.set_page_config(page_title="Подготовка к олимпиадам", layout="wide")
 
-st.title("📊 Экономическая Панель Управления (Прототип)")
+if "current_screen" not in st.session_state:
+    st.session_state.current_screen = "login_screen"
 
-# Создаем 2 колонки с пропорциями 1 к 3
-col_sidebar, col_main = st.columns([1, 3])
+
+if st.session_state.current_screen == "login_screen":
+    st.subheader("Привет! Вы находитесь на экране входа.")
+
+    col_class, col_subject, col_stage = st.columns([1, 1, 1])
+
+    with col_class:
+        choice_class = st.radio(
+    "Выберите класс:",
+    [" 5 класс", "6 класс", "7 класс", "8 класс", "9 класс", "10 класс", "11 класс"]
+)
+    with col_subject:
+        choice_subject = st.radio(
+    "Выберите предмет:",
+    ["математика", "физика", "химия", "география", "обществоведение", "история вс.", "история Беларуси"]
+)
+
+    with col_stage:
+            choice_stage = st.radio(
+        "Выберите этап:",
+        ["школьный", "районный", "областной", "республиканский"]
+)
+
 
 # ---- ЛЕВАЯ КОЛОНКА (Ввод данных) ----
 with col_sidebar:
