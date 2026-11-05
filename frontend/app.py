@@ -7,6 +7,11 @@ st.set_page_config(page_title="Подготовка к олимпиадам", la
 if "current_screen" not in st.session_state:
     st.session_state.current_screen = "login_screen"
 
+if "current_task_index" not in st.session_state:
+    st.session_state["current_task_index"] = 1
+
+
+
 
 if st.session_state.current_screen == "login_screen":
     st.subheader("Привет! Вы находитесь на экране входа.")
@@ -38,15 +43,23 @@ if choice_cfg:
         "choice_stage": choice_stage
     }
     
-    BACKEND_URL = "http://backend:8000/api/get-tasks"
+    BACKEND_URL = "http://nginx/api/get-task"
     
     try:
-        with st.spinner('Считаем модель и строим прогнозы...'):
+        with st.spinner('обрабатываем ваши данные'):
             response = requests.post(BACKEND_URL, json=payload)
             data_json = response.json()
         
         if data_json.get("status") == "success":
             matrix = data_json.get("result")
+            st.session_state.current_screen = "tasks"
             
     except Exception as e:
         st.error(f"Ошибка подключения к бэкенд-контейнеру: {e}")
+
+
+if st.session_state.current_screen == "tasks":
+    banner_tab, task_tab, check_result_tab, end_task_tab = st.tabs(1,4,1,1)
+    current_task = st.session_state["current_task_index"]
+    with task_tab:
+        st.text(text=f"задача {current_task}")
